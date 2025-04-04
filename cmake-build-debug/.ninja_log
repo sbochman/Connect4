@@ -1,4 +1,23 @@
 # ninja log v6
-6	1354	7652741699219872	CMakeFiles/untitled.dir/main.cpp.obj	43ab85f499d48fc9
-10	406	7652749497258797	build.ninja	996cceae08c846cc
-6	128	7652741804072003	untitled.exe	5d452f9e39dc32ae
+9	391	7654428732681453	build.ninja	264244256d470394
+9	1733	7653934562537042	CMakeFiles/untitled.dir/main.cpp.obj	1ec6ea3c9fe0c71c
+1734	1980	7653934579790655	untitled.exe	43a88bfb57f77e6c
+28	1033	7653613798711876	CMakeFiles/untitled.dir/GameBoard/Board.cpp.obj	c08c238781a8fe2f
+24	415	7653580503852753	CMakeFiles/untitled.dir/AI.cpp.obj	24d6d6a29b4344eb
+21	604	7654437130760305	CMakeFiles/untitled.dir/AI/AI.cpp.obj	caffb4ec4fab0c
+8	1040	7654437130638842	CMakeFiles/untitled.dir/main.cpp.obj	1ec6ea3c9fe0c71c
+1040	1220	7654437140953290	untitled.exe	d5fb72a3e85dde8b
+6	1115	7654437942074422	CMakeFiles/untitled.dir/main.cpp.obj	1ec6ea3c9fe0c71c
+1116	1274	7654437953162749	untitled.exe	d5fb72a3e85dde8b
+6	644	7654438595990907	CMakeFiles/untitled.dir/AI/AI.cpp.obj	caffb4ec4fab0c
+645	831	7654438602379071	untitled.exe	d5fb72a3e85dde8b
+9	1164	7654439430245594	CMakeFiles/untitled.dir/main.cpp.obj	1ec6ea3c9fe0c71c
+1165	1327	7654439441795453	untitled.exe	d5fb72a3e85dde8b
+6	677	7654440641424606	CMakeFiles/untitled.dir/AI/AI.cpp.obj	caffb4ec4fab0c
+677	821	7654440648136825	untitled.exe	d5fb72a3e85dde8b
+5	597	7654440932912680	CMakeFiles/untitled.dir/AI/AI.cpp.obj	caffb4ec4fab0c
+598	732	7654440938825931	untitled.exe	d5fb72a3e85dde8b
+6	584	7654442329533813	CMakeFiles/untitled.dir/AI/AI.cpp.obj	caffb4ec4fab0c
+584	725	7654442335316921	untitled.exe	d5fb72a3e85dde8b
+9	1056	7654444365092473	CMakeFiles/untitled.dir/main.cpp.obj	1ec6ea3c9fe0c71c
+1056	1214	7654444375572138	untitled.exe	d5fb72a3e85dde8b
