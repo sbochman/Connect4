@@ -18,7 +18,13 @@ link_directories("C:/Libraries/SFML-2.6.0/lib")
 
 
 # Create executable
-add_executable(untitled main.cpp)
+add_executable(untitled main.cpp
+        GameBoard/Board.cpp
+        Constants/BoardConstants.h
+        GameBoard/Board.h
+        AI/AI.cpp
+        AI/AI.h
+)
 
 # Link SFML libraries
 target_link_libraries(untitled

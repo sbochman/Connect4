@@ -56,6 +56,20 @@ build CMakeFiles/untitled.dir/main.cpp.obj: CXX_COMPILER__untitled_unscanned_Rel
   OBJECT_DIR = CMakeFiles\untitled.dir
   OBJECT_FILE_DIR = CMakeFiles\untitled.dir
 
+build CMakeFiles/untitled.dir/GameBoard/Board.cpp.obj: CXX_COMPILER__untitled_unscanned_Release C$:/Users/seanb/CLionProjects/Connect4/GameBoard/Board.cpp || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles\untitled.dir\GameBoard\Board.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/Libraries/SFML-2.6.0/include
+  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles\untitled.dir\GameBoard
+
+build CMakeFiles/untitled.dir/AI/AI.cpp.obj: CXX_COMPILER__untitled_unscanned_Release C$:/Users/seanb/CLionProjects/Connect4/AI/AI.cpp || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles\untitled.dir\AI\AI.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/Libraries/SFML-2.6.0/include
+  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles\untitled.dir\AI
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target untitled
@@ -64,7 +78,7 @@ build CMakeFiles/untitled.dir/main.cpp.obj: CXX_COMPILER__untitled_unscanned_Rel
 #############################################
 # Link the executable untitled.exe
 
-build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Release CMakeFiles/untitled.dir/main.cpp.obj | C$:/Libraries/SFML-2.6.0/lib/libsfml-graphics.a C$:/Libraries/SFML-2.6.0/lib/libsfml-window.a C$:/Libraries/SFML-2.6.0/lib/libsfml-system.a
+build untitled.exe: CXX_EXECUTABLE_LINKER__untitled_Release CMakeFiles/untitled.dir/main.cpp.obj CMakeFiles/untitled.dir/GameBoard/Board.cpp.obj CMakeFiles/untitled.dir/AI/AI.cpp.obj | C$:/Libraries/SFML-2.6.0/lib/libsfml-graphics.a C$:/Libraries/SFML-2.6.0/lib/libsfml-window.a C$:/Libraries/SFML-2.6.0/lib/libsfml-system.a
   FLAGS = -O3 -DNDEBUG
   LINK_LIBRARIES = C:/Libraries/SFML-2.6.0/lib/libsfml-graphics.a  C:/Libraries/SFML-2.6.0/lib/libsfml-window.a  C:/Libraries/SFML-2.6.0/lib/libsfml-system.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Libraries/SFML-2.6.0/lib
