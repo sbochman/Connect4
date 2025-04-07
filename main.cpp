@@ -56,6 +56,7 @@ int main() {
 
     // Player turn tracking
     int currentPlayer = 0; // 0 = Red, 1 = Blue
+    AI ai;
     std::array<int, BOARD_COLS> columnLevel; // Tracks available row in each column
 
     for (auto& c : columnLevel) {
@@ -74,19 +75,15 @@ int main() {
             }
 
             if (currentPlayer) {
-                int col = AI::makeMove(boardState, columnLevel);
+                int col = ai.makeMove(boardState, gameBoard.getColumnLevelArray());
 
-                char mark = (player ? 'X' : 'O');
+                char mark = 'X';
                 int row = gameBoard.makeMove(col, mark);
-
                 //fill board color based on col and row
-                board[row][col].setFillColor(currentPlayer == 0 ? sf::Color::Red : sf::Color::Blue);
-
-                // Switch player turn
+                board[row][col].setFillColor(sf::Color::Red);
+                boardState[row][col] = 'X';
                 currentPlayer = 1 - currentPlayer;
-                boardState[row][col] = (player ? 'X'  : 'O');
 
-                player = !player;
                 gameBoard.print_board();
                 bool win = gameBoard.validate_win(row, col, mark);
                 if (win) {
@@ -100,31 +97,33 @@ int main() {
             }
 
             // Handle mouse clicks
-            else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                int col = event.mouseButton.x / CELL_SIZE;
+            else {
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                    int col = event.mouseButton.x / CELL_SIZE;
 
-                // Place token in the lowest available row
-                if (col >= 0 && col < BOARD_COLS && columnLevel[col] >= 0) {
-                    char mark = (player ? 'X' : 'O');
-                    int row = gameBoard.makeMove(col, mark);
+                    // Place token in the lowest available row
+                    if (col >= 0 && col < BOARD_COLS && columnLevel[col] >= 0) {
+                        char mark = 'O';
+                        std::cout << "Player is " + mark << endl;
+                        int row = gameBoard.makeMove(col, mark);
 
-                    //fill board color based on col and row
-                    board[row][col].setFillColor(currentPlayer == 0 ? sf::Color::Red : sf::Color::Blue);
+                        //fill board color based on col and row
+                        board[row][col].setFillColor(sf::Color::Blue);
+                        boardState[row][col] = mark;
 
-                    // Switch player turn
-                    currentPlayer = 1 - currentPlayer;
-                    boardState[row][col] = (player ? 'X'  : 'O');
-
-                    player = !player;
-                    gameBoard.print_board();
-                    bool win = gameBoard.validate_win(row, col, mark);
-                    if (win) {
-                        //add to UI "Player X WINS"
-                        cout << "Player " + to_string(currentPlayer) + " won!" << endl;
-                        bannerText.setString("Player " + to_string(currentPlayer) + " won!");
-                        banner.clear(sf::Color::Black);
-                        banner.draw(bannerText);
-                        banner.display();
+                        // Switch player turn
+                        currentPlayer = 1 - currentPlayer;
+                        player = !player;
+                        gameBoard.print_board();
+                        bool win = gameBoard.validate_win(row, col, mark);
+                        if (win) {
+                            //add to UI "Player X WINS"
+                            cout << "Player " + to_string(currentPlayer) + " won!" << endl;
+                            bannerText.setString("Player " + to_string(currentPlayer) + " won!");
+                            banner.clear(sf::Color::Black);
+                            banner.draw(bannerText);
+                            banner.display();
+                        }
                     }
                 }
             }

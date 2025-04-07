@@ -24,6 +24,8 @@ add_executable(untitled main.cpp
         GameBoard/Board.h
         AI/AI.cpp
         AI/AI.h
+        GameBoard/BoardFactory.cpp
+        GameBoard/BoardFactory.h
 )
 
 # Link SFML libraries
