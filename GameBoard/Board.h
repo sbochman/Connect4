@@ -29,7 +29,9 @@ public:
 
     [[nodiscard]] bool isValidMove(int col) const;
 
-    [[nodiscard]] int evaluatePosition(bool player);
+    [[nodiscard]] int evaluatePosition(bool aiTurn);
+
+    [[nodiscard]] bool isGameWon(bool player) const;
 
     void removeLastMove();
 
