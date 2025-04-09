@@ -72,15 +72,22 @@ bool Board::validate_win(const int row, const int col, const char mark) const {
 }
 
 bool Board::isValidMove(const int col) const {
-    return getColumnLevel(col) < BOARD_ROWS;
+    return getColumnLevel(col) >= 0;
 }
 
-int Board::evaluatePosition(const bool player) {
-    auto [row, col] = lastMove;
+bool Board::isGameWon(const bool player) const {
+    auto [ row, col ] = lastMove;
     const char mark = player ? 'X' : 'O';
+    return validate_win(row, col, mark);
+}
+
+
+int Board::evaluatePosition(const bool aiTurn) {
+    auto [row, col] = lastMove;
+    const char mark = aiTurn ? 'X' : 'O';
     bool win = validate_win(row, col, mark);
-    if (player) {
-        //std::cout << "opponent will win" << std::endl;
+    if (!aiTurn) { //if ai turn meaning that the last move was a human -> a win by human and now ai turn should return negative
+        //if (win) std::cout << "opponent will win" << std::endl;
         if (win) return -1000;
         return 0;
     }

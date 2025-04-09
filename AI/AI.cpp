@@ -30,7 +30,12 @@ int AI::makeMove(const std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> &boa
                 bestScore = score;
             }
             std::cout << "Score: " << score << std::endl;
+            std::cout << "bestMove: " << bestMove << std::endl;
             std::cout << "==========================" << std::endl;
+        }
+        else {
+            std::cout << "No move found" << std::endl;
+            bestMove++;
         }
     }
     return bestMove;
@@ -40,8 +45,16 @@ int AI::makeMove(const std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> &boa
 //player - False ==> Player
 int AI::traverseTree(Board board, const int depth, const bool player) {
     if (depth == MAX_DEPTH) {
-        int res = board.evaluatePosition(player);
+        //std::cout << board.isGameWon(!player) << std::endl;
+        const bool lastPlayerAi = !player;
+        int res = board.evaluatePosition(lastPlayerAi); //not player is the previous move player. when depth is even its AI turn
+        //board.print_board();
         //std::cout << res << std::endl;
+        return res;
+    }
+    if (board.isGameWon(!player)) {
+        const bool lastPlayerAi = !player;
+        int res = board.evaluatePosition(lastPlayerAi);
         return res;
     }
     int bestLocalScore = player ? -10000 : 10000;
@@ -51,18 +64,22 @@ int AI::traverseTree(Board board, const int depth, const bool player) {
             const char mark = player ? 'X' : 'O';
             board.makeMove(col, mark);
             //board.print_board();
+            //int currDepthScore = board.evaluatePosition(player, depth % 2 != 0);
+
             int score = traverseTree(board, depth+1, !player);
             //std::cout << "score: " << score << std::endl;
             if (player) {
+                //currDepthScore = std::max(currDepthScore, score);
                 bestLocalScore = std::max(bestLocalScore, score);
             }
             else {
+                //currDepthScore = std::min(currDepthScore,score);
                 bestLocalScore = std::min(bestLocalScore, score);
             }
             //remove last move
             board.removeLastMove();
         }
     }
-    //std::cout << bestLocalScore << std::endl;
+    //::cout << bestLocalScore << std::endl;
     return bestLocalScore;
 }
