@@ -6,7 +6,7 @@ constexpr int BOARD_COLS = 7;
 constexpr char EMPTY_CELL = '.';
 constexpr char PLAYER_ONE_MOVE = 'X';
 constexpr char PLAYER_TWO_MOVE = 'O';
-constexpr char MAX_DEPTH = 5;
+constexpr char MAX_DEPTH = 11;
 
 constexpr std::array<std::pair<int, int>, 4> directions = {{{0, 1},{1, 0}, {1, 1}, {1, -1}}};
 constexpr int WIN_COUNT = 4;
