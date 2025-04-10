@@ -1,5 +1,6 @@
 #include "AI.h"
 #include <array>
+#include <map>
 #include <iostream>
 #include <ostream>
 #include <random>
@@ -34,28 +35,36 @@ int AI::makeMove(const std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> &boa
             std::cout << "==========================" << std::endl;
         }
         else {
-            std::cout << "No move found" << std::endl;
-            bestMove++;
+            //std::cout << "No move found" << std::endl;
+            if (i == bestMove) bestMove++;
         }
     }
     return bestMove;
 }
 
+std::map<std::pair<std::array<std::array<char, BOARD_COLS>, BOARD_ROWS>, bool>, int> memo;
+
 //player - True ==> AI
 //player - False ==> Player
 int AI::traverseTree(Board board, const int depth, const bool player) {
+    auto key = std::make_pair(board.getBoard(), player);
     if (depth == MAX_DEPTH) {
         //std::cout << board.isGameWon(!player) << std::endl;
         const bool lastPlayerAi = !player;
         int res = board.evaluatePosition(lastPlayerAi); //not player is the previous move player. when depth is even its AI turn
         //board.print_board();
         //std::cout << res << std::endl;
+        memo[key] = res;
         return res;
     }
     if (board.isGameWon(!player)) {
         const bool lastPlayerAi = !player;
         int res = board.evaluatePosition(lastPlayerAi);
+        memo[key] = res;
         return res;
+    }
+    if (memo.contains(key)) {
+        return memo[key];
     }
     int bestLocalScore = player ? -10000 : 10000;
     //else we need to recursively try all moves
@@ -81,5 +90,6 @@ int AI::traverseTree(Board board, const int depth, const bool player) {
         }
     }
     //::cout << bestLocalScore << std::endl;
+    memo[key] = bestLocalScore;
     return bestLocalScore;
 }

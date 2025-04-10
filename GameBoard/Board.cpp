@@ -26,7 +26,7 @@ void Board::printColumnLevel()const {
 }
 
 void Board::setColumnLevel(const int col) {
-    if (columnLevel[col] > 0) columnLevel[col]--;
+    if (columnLevel[col] >= 0) columnLevel[col]--;
 }
 
 int Board::makeMove(const int col, const char mark) {
@@ -81,21 +81,53 @@ bool Board::isGameWon(const bool player) const {
     return validate_win(row, col, mark);
 }
 
+int Board::connections(int row, int col, char mark) {
+    int count = 1;
+    for (const auto& dir : directions) {
+        for (int i = 1; i <= WIN_COUNT; ++i) {
+            int r = row + dir.first * i;
+            int c = col + dir.second * i;
+
+            if (r >= 0 && r < BOARD_ROWS && c >= 0 && c < BOARD_COLS) {
+                if (board[r][c] == mark)
+                    count++;
+                else break;
+            }
+        }
+
+        for (int i = 1; i < WIN_COUNT; ++i) {
+            int r = row - dir.first * i;
+            int c = col - dir.second * i;
+
+            if (r >= 0 && r < BOARD_ROWS && c >= 0 && c < BOARD_COLS) {
+                if (board[r][c] == mark)
+                    count++;
+                else break;
+            }
+        }
+        return count;
+    }
+}
+
 
 int Board::evaluatePosition(const bool aiTurn) {
     auto [row, col] = lastMove;
     const char mark = aiTurn ? 'X' : 'O';
     bool win = validate_win(row, col, mark);
+    int connected = connections(row, col, mark);
     if (!aiTurn) { //if ai turn meaning that the last move was a human -> a win by human and now ai turn should return negative
         //if (win) std::cout << "opponent will win" << std::endl;
         if (win) return -1000;
-        return 0;
+        return -connected;
     }
     else {
         if (win) {
             return 1000;
         }
-        return 0;
+        else if (col > 1 && col <  BOARD_COLS - 3) {
+            return connected+2;
+        }
+        return connected;
     }
 }
 

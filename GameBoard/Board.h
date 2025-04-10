@@ -31,6 +31,8 @@ public:
 
     [[nodiscard]] int evaluatePosition(bool aiTurn);
 
+    [[nodiscard]] int connections(int row, int col, char mark);
+
     [[nodiscard]] bool isGameWon(bool player) const;
 
     void removeLastMove();
