@@ -9,6 +9,7 @@
 
 static std::mt19937 gen(std::random_device{}());
 static BoardFactory boardFactory;
+int bestScore;
 
 int AI::makeMove(const std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> &board, const std::array<int, BOARD_COLS> &level) {
 
@@ -18,18 +19,19 @@ int AI::makeMove(const std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> &boa
     //return randomCol;
 
     int bestMove = 0;
-    int bestScore = -10000;
+    bestScore = -10000;
     std::cout << "" << std::endl;
     for (int i = 0; i < BOARD_COLS; i++) {
         if (currentBoard.isValidMove(i)) {
             Board newBoard = currentBoard;
             newBoard.makeMove(i, 'X');
             std::cout<< "traversing tree" << std::endl;
-            const int &score = traverseTree(newBoard, 0, false);
+            const int &score = traverseTree(newBoard, 0, false, -10000, 10000);
             if (score > bestScore) {
-                bestMove = i;
                 bestScore = score;
+                bestMove = i;
             }
+
             std::cout << "Score: " << score << std::endl;
             std::cout << "bestMove: " << bestMove << std::endl;
             std::cout << "==========================" << std::endl;
@@ -46,7 +48,7 @@ std::map<std::pair<std::array<std::array<char, BOARD_COLS>, BOARD_ROWS>, bool>, 
 
 //player - True ==> AI
 //player - False ==> Player
-int AI::traverseTree(Board board, const int depth, const bool player) {
+int AI::traverseTree(Board board, const int depth, const bool player, int alpha, int beta) {
     auto key = std::make_pair(board.getBoard(), player);
     if (depth == MAX_DEPTH) {
         //std::cout << board.isGameWon(!player) << std::endl;
@@ -66,8 +68,10 @@ int AI::traverseTree(Board board, const int depth, const bool player) {
     if (memo.contains(key)) {
         return memo[key];
     }
+
     int bestLocalScore = player ? -10000 : 10000;
     //else we need to recursively try all moves
+    int colsPassed = 0;
     for (int col = 0; col < BOARD_COLS; col++) {
         if (board.isValidMove(col)) {
             const char mark = player ? 'X' : 'O';
@@ -75,20 +79,24 @@ int AI::traverseTree(Board board, const int depth, const bool player) {
             //board.print_board();
             //int currDepthScore = board.evaluatePosition(player, depth % 2 != 0);
 
-            int score = traverseTree(board, depth+1, !player);
+            int score = traverseTree(board, depth+1, !player, alpha, beta);
             //std::cout << "score: " << score << std::endl;
             if (player) {
-                //currDepthScore = std::max(currDepthScore, score);
                 bestLocalScore = std::max(bestLocalScore, score);
+                alpha = std::max(alpha, bestLocalScore);
+                if (beta <= alpha) break;
             }
             else {
-                //currDepthScore = std::min(currDepthScore,score);
                 bestLocalScore = std::min(bestLocalScore, score);
+                beta = std::min(beta, bestLocalScore);
+                if (beta <= alpha) break;
             }
             //remove last move
             board.removeLastMove();
         }
+        else colsPassed++;
     }
+    if (colsPassed == BOARD_COLS) bestLocalScore = 0;
     //::cout << bestLocalScore << std::endl;
     memo[key] = bestLocalScore;
     return bestLocalScore;
