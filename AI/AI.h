@@ -8,7 +8,7 @@
 
 class AI {
 private:
-    [[nodiscard]] int traverseTree(Board board, int depth, bool player);
+    [[nodiscard]] int traverseTree(Board board, int depth, bool player, int alpha, int beta);
 
 public:
     [[nodiscard]] int makeMove(const std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> &board,

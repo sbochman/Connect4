@@ -9,6 +9,9 @@ private:
     std::array<int, BOARD_COLS> columnLevel;
     std::pair<int, int> lastMove;
 
+    [[nodiscard]] int connections(int row, int col, char mark);
+
+    [[nodiscard]] bool foundFork(char mark);
 
 public:
     Board(std::array<std::array<char, BOARD_COLS>, BOARD_ROWS> inputBoard, std::array<int, BOARD_COLS> inputColumnLevel);
@@ -30,8 +33,6 @@ public:
     [[nodiscard]] bool isValidMove(int col) const;
 
     [[nodiscard]] int evaluatePosition(bool aiTurn);
-
-    [[nodiscard]] int connections(int row, int col, char mark);
 
     [[nodiscard]] bool isGameWon(bool player) const;
 
